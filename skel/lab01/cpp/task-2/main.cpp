@@ -20,12 +20,36 @@ private:
     double get_result() {
         // TODO: Calculati sqrt(n) cu o precizie de 0.001
         // Precizie de 10^-x = |rezultatul vostru - rezultatul corect| <= 10^-x
-        return 0.0;
+        double left, right, middle;        
+        if(n > 1) {
+            left = 1;
+            right = n;
+        } 
+        else if(n == 1) return 1;
+        else {
+            left = n;
+            right = 1;
+        } 
+
+        double power2, precision;
+
+        while(left <= right) {
+            middle = left + (right - left) / 2;
+            cout << left << " " << middle << " " << right << " " ;
+            power2 = middle * middle;
+            precision = fabs(power2 - n);
+            cout << precision << endl;
+            if(precision < 0.001) return middle;
+            else if(n <= power2) right = middle - 0.0001;
+            else if(n > power2) left = middle + 0.0001;
+        }
+
+        return middle;
     }
 
     void print_output(double result) {
         ofstream fout("out");
-        fout << setprecision(4) << fixed << result;
+        fout << setprecision(4) << fixed << result << endl;
         fout.close();
     }
 };
